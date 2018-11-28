@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logout</title>
+</head>
+<body>
+
+{#this form redirects to the index#}
+<form method="post">
+{% csrf_token %}
+    <input type="submit" name="log_me_out" value="Logout">
+
+</form>
+</body>
+</html>
