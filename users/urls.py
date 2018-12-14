@@ -3,7 +3,7 @@
 from django.conf.urls import url
 from django.http import request
 from django.urls import path
-from django.contrib.auth.views import LoginView, login
+from django.contrib.auth.views import LoginView
 from users.views import signup, logout_view, login_view, test_model_view
 
 app_name = 'users'
