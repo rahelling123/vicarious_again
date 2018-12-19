@@ -11,7 +11,7 @@ from event.models import Event
 
 def index(request):
     template_name = 'users/index.html'
-    list_events = Event.objects.all().order_by('-id')[:6]
+    list_events = Event.objects.all().order_by('id')[:6]
     context = {'list_events':list_events}
     return render(request,template_name, context)
 

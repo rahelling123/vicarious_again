@@ -12,13 +12,12 @@
 
 
 <h3>Recent Vicarious Living Requests:</h3>
-{% for event in list_events %}
+{% for event in list_events  %}
     <a href="{% url 'event:event_detail' event.id %}">{{ event }}</a> <br>
 {% endfor %}
   <br>
 
-    The name of the example is: {{ mock_user.name }} <br>
-{{ message }} as {{ event_new }}
+
 </body>
 
 {% endblock %}
