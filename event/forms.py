@@ -11,7 +11,9 @@ class EventForm(ModelForm):
         fields = ['title', 'description']
 
 
+
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
+        labels = {"description": "Comment"}
         fields = ['description']
