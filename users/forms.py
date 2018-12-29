@@ -8,3 +8,4 @@ class TestModelForm(ModelForm):
     class Meta:
         model = TestModel
         fields = ['name', 'last', 'username']
+

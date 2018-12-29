@@ -4,6 +4,14 @@
 <title>Event Detail</title>
 <body>
 {{ detail_event.description }}
+
+<form>
+  {{ comment_form.as_p }}  <br>
+    <input type="submit" value="post comment">
+</form>
+
+{{ comment_list }}
+
 </body>
 
 {% endblock %}

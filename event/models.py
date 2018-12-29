@@ -17,3 +17,8 @@ class Event(models.Model):
         full_list = Event.objects.all()
         recent_list = full_list[:5]
         return recent_list
+
+
+class Comment(models.Model):
+    description = models.CharField(max_length=1000)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
