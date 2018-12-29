@@ -3,14 +3,18 @@
 {% block content %}
 <title>Event Detail</title>
 <body>
+<h2>{{ detail_event.title }}</h2><br>
 {{ detail_event.description }}
+<br><br>
+{{ comment_list }}
 
-<form>
-  {{ comment_form.as_p }}  <br>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
     <input type="submit" value="post comment">
 </form>
 
-{{ comment_list }}
+
 
 </body>
 
