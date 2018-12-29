@@ -6,7 +6,11 @@
 <h2>{{ detail_event.title }}</h2><br>
 {{ detail_event.description }}
 <br><br>
-{{ comment_list }}
+
+{% for comment in comment_list %}
+    {{ comment.description }}<br>
+    - posted by {{ comment.author }}<br><br>
+{% endfor %}
 
 <form action="" method="post">
     {% csrf_token %}

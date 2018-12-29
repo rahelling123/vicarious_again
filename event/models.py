@@ -22,4 +22,4 @@ class Event(models.Model):
 class Comment(models.Model):
     description = models.CharField(max_length=1000)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    # event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
