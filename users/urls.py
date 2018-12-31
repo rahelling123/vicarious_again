@@ -4,7 +4,7 @@ from django.conf.urls import url
 from django.http import request
 from django.urls import path
 from django.contrib.auth.views import LoginView
-from users.views import signup, logout_view, login_view, test_model_view
+from users.views import signup, logout_view, login_view, test_model_view, dashboard
 
 app_name = 'users'
 urlpatterns = [
@@ -12,5 +12,6 @@ urlpatterns = [
     path('signup/', signup, name='signup'),
     path('logout/', logout_view, name='logout'),
     path('testform/', test_model_view, name='test_model_view'),
+    path('dashboard/', dashboard, name='dashboard'),
 ]
 

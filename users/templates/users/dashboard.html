@@ -1,0 +1,30 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+</head>
+
+
+<body>
+These are all the comments you have made:
+{% for comment in user_comment %}
+   <li>{{ comment.description }}</li><br>
+    <li>{{ comment.event }}</li>
+{% endfor%}
+
+<hr>
+
+These are all the events you have commented on:
+{% for event in events %}
+    <li>{{ event.title }}</li><br>
+{% endfor %}
+
+</body>
+
+
+{% endblock %}
+</html>
