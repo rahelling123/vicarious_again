@@ -20,7 +20,7 @@
 {% for comment in comment_list %}
     <hr>
     {{ comment.description }}<br>
-    - posted by {{ comment.author }}<br><br>
+    - posted by <a href="{% url 'users:dashboard' comment.author.pk %}">{{ comment.author }}</a> <br><br>
     {% for reply in comment.reply_set.all %}
         <li>{{ reply.description }}</li><br>
         {% endfor %}
@@ -31,7 +31,7 @@
 
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-    <input type="text" name="reply" value="reply">
+    <input type="text" name="reply" value="Type your reply here">
         <input type="submit" name="action" value="reply">
         <input type="hidden" name = 'parent_id' value="{{ comment.pk }}">
     </form>

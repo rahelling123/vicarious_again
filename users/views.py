@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.urls import reverse
 from .forms import TestModelForm
 from event.models import Event, Comment
@@ -61,16 +62,21 @@ def login_view(request):
         return render(request, 'users/login.html')
 
 
-def dashboard(request):
-    events = []
+#TODO need a logged in user dashboard and a non logged in user view
+def dashboard(request, user_id):
     user = request.user
-    user_comment = Comment.objects.filter(author=user)
-    for comment in user_comment:
-        event_comment = comment.event
-        if event_comment not in events:
-            events.append(event_comment)
-    context = {'user_comment':user_comment, 'events':events}
-    return render(request, 'users/dashboard.html', context)
+    if (user.is_authenticated and user.pk != user_id) or (not user.is_authenticated):
+        return HttpResponse("This will be a page that only shows certain things")
+    else:
+        events = []
+        user = request.user
+        user_comment = Comment.objects.filter(author=user)
+        for comment in user_comment:
+            event_comment = comment.event
+            if event_comment not in events:
+                events.append(event_comment)
+        context = {'user_comment':user_comment, 'events':events}
+        return render(request, 'users/dashboard.html', context)
 
 
 def test_model_view(request):

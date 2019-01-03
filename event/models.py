@@ -9,6 +9,7 @@ class Event(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
     author = ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.title
@@ -24,10 +25,12 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    # reply = models.ForeignKey('self', on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-created']
+
+    def __str__(self):
+        return self.description
 
 
 class Reply(models.Model):
