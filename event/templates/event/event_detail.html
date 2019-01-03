@@ -7,17 +7,37 @@
 {{ detail_event.description }}
 <br><br>
 
-{% for comment in comment_list %}
-    {{ comment.description }}<br>
-    - posted by {{ comment.author }}<br><br>
-{% endfor %}
 
-<form action="" method="post">
+<form action=""  method="post">
     {% csrf_token %}
     {{ comment_form.as_p }}
-    <input type="submit" value="post comment">
+    <input type="submit" name="action" value="post comment">
 </form>
 
+<br>
+
+{# This will show the comments for the event and allow you to post more  #}
+{% for comment in comment_list %}
+    <hr>
+    {{ comment.description }}<br>
+    - posted by {{ comment.author }}<br><br>
+    {% for reply in comment.reply_set.all %}
+        <li>{{ reply.description }}</li><br>
+        {% endfor %}
+
+{# this allows you to reply to either the comment or each reply #}
+    <form action= "" method="post">
+    {% csrf_token %}
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <input type="text" name="reply" value="reply">
+        <input type="submit" name="action" value="reply">
+        <input type="hidden" name = 'parent_id' value="{{ comment.pk }}">
+    </form>
+    <br><br>
+
+{% endfor %}
 
 
 </body>

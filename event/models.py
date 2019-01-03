@@ -23,3 +23,15 @@ class Comment(models.Model):
     description = models.CharField(max_length=1000)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    # reply = models.ForeignKey('self', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-created']
+
+
+class Reply(models.Model):
+    description = models.CharField(max_length=1000)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, blank=True, on_delete=models.CASCADE)
+    sub_reply = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
