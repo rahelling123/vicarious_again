@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -49,7 +49,7 @@ def logout_view(request):
     else:
         return render(request, 'users/logout.html')
 
-
+#TODO when this fails it redirects anyways...
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -66,7 +66,7 @@ def login_view(request):
 def dashboard(request, user_id):
     user = request.user
     if (user.is_authenticated and user.pk != user_id) or (not user.is_authenticated):
-        return HttpResponse("This will be a page that only shows certain things")
+        return redirect('users:visitor', user_id=user_id)
     else:
         events = []
         user = request.user
@@ -90,6 +90,11 @@ def test_model_view(request):
     else:
         context = {'form': form}
         return render(request,'users/testmodel.html', context)
+
+
+def visitor(request, user_id):
+    return render(request, 'users/visitor.html')
+
 
 
 
