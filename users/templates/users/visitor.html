@@ -2,6 +2,14 @@
 
 {% block content %}
 
-    Visitor landing page
+Requests put in by {{ user_home.username }}
+    {% for event in user_events %}
+        <li><a href="{% url 'event:event_detail' event.pk %}">{{ event.description }}</a></li>
+    {% endfor %}
+<br>
+
+Placeholders:
+    - send user message <br>
+    - about user? bio?
 
 {% endblock %}

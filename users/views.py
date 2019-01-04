@@ -96,7 +96,10 @@ def test_model_view(request):
 
 
 def visitor(request, user_id):
-    return render(request, 'users/visitor.html')
+    user_events= User.objects.get(pk=user_id).event_set.all()
+    user_home = User.objects.get(pk=user_id)
+    context = {'user_events':user_events, 'user_home':user_home}
+    return render(request, 'users/visitor.html', context)
 
 
 
