@@ -50,7 +50,6 @@ def event_detail(request, event_id):
                               comment=Comment.objects.get(pk=request.POST['parent_id']))
             reply_new.save()
             return HttpResponseRedirect('.')
-
     else:
         return render(request, 'event/event_detail.html', context)
 

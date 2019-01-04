@@ -49,15 +49,18 @@ def logout_view(request):
     else:
         return render(request, 'users/logout.html')
 
+
 #TODO when this fails it redirects anyways...
 def login_view(request):
+    list_events = Event.objects.all().order_by('-id')[:6]
+    context = {'list_events':list_events}
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-        return render(request, 'users/index.html')
+        return HttpResponseRedirect(reverse(index), context)
     else:
         return render(request, 'users/login.html')
 
