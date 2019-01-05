@@ -4,8 +4,9 @@ from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse
-from .forms import TestModelForm
+from .forms import TestModelForm, DirectMessageForm
 from event.models import Event, Comment
+from users.models import DirectMessage
 
 # Create your views here.
 
@@ -100,6 +101,24 @@ def visitor(request, user_id):
     user_home = User.objects.get(pk=user_id)
     context = {'user_events':user_events, 'user_home':user_home}
     return render(request, 'users/visitor.html', context)
+
+
+def direct_message_send(request, user_id):
+    form = DirectMessageForm
+    if request.method=='POST':
+        new_direct_message = DirectMessageForm(data=request.POST)
+        if new_direct_message.is_valid():
+            new_direct_message = new_direct_message.save(commit=False)
+            new_direct_message.sender = request.user
+            new_direct_message.recipient = User.objects.get(pk=user_id)
+            #TODO 3
+            # new_direct_message.sender = request.user
+            # new_direct_message.recipient = User.objects.get(pk=user_id)
+            new_direct_message.save()
+            return HttpResponseRedirect(reverse('users:visitor', args=[user_id],))
+    else:
+        context = {'form': form}
+        return render(request, 'users/send_message.html', context)
 
 
 
