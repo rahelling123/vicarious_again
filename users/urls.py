@@ -4,7 +4,8 @@ from django.conf.urls import url
 from django.http import request
 from django.urls import path
 from django.contrib.auth.views import LoginView
-from users.views import signup, logout_view, login_view, test_model_view, dashboard, visitor, direct_message_send
+from users.views import signup, logout_view, login_view, test_model_view, dashboard, visitor,\
+    direct_message_send, thread
 
 app_name = 'users'
 urlpatterns = [
@@ -15,5 +16,6 @@ urlpatterns = [
     path('dashboard/<int:user_id>', dashboard, name='dashboard'),
     path('visitor/<int:user_id>', visitor, name='visitor'),
     path('send_message/<int:user_id>', direct_message_send, name= 'direct_message_send'),
+    path('thread/<int:dm_id>',thread, name='thread' ),
 ]
 

@@ -4,7 +4,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse
-from .forms import TestModelForm, DirectMessageForm
+from .forms import TestModelForm, DirectMessageForm, DirectMessageReplyForm
 from event.models import Event, Comment
 from users.models import DirectMessage
 
@@ -75,11 +75,14 @@ def dashboard(request, user_id):
         events = []
         user = request.user
         user_comment = Comment.objects.filter(author=user)
+        #TODO this is not scalable is it?
+        user_message = DirectMessage.objects.filter(recipient=user)
         for comment in user_comment:
             event_comment = comment.event
             if event_comment not in events:
                 events.append(event_comment)
-        context = {'user_comment':user_comment, 'events':events}
+        context = {'user_comment':user_comment, 'events':events,
+                   'user_message':user_message}
         return render(request, 'users/dashboard.html', context)
 
 
@@ -115,11 +118,27 @@ def direct_message_send(request, user_id):
             # new_direct_message.sender = request.user
             # new_direct_message.recipient = User.objects.get(pk=user_id)
             new_direct_message.save()
+            #TODO pass this message in the redirect with context
+            success = 'Message sent'
             return HttpResponseRedirect(reverse('users:visitor', args=[user_id],))
     else:
         context = {'form': form}
         return render(request, 'users/send_message.html', context)
 
 
-
+#TODO 4
+def thread(request, dm_id):
+    form = DirectMessageReplyForm
+    thread = DirectMessage.objects.get(pk=dm_id)
+    thread_replies = thread.dm_reply.all()
+    context = {'form':form, 'thread_replies':thread_replies}
+    if request.method=='POST':
+        new_reply = DirectMessageReplyForm(data=request.POST)
+        if new_reply.is_valid():
+            new_reply = new_reply.save(commit=False)
+            new_reply.dm_reply = DirectMessage.objects.get(pk=dm_id) #TODO there has to be a better way to do this, doesnt this just create massive loops?
+            new_reply.save()
+            return HttpResponseRedirect(reverse('users:thread', args=[dm_id],))
+    else:
+        return render(request, 'users/thread.html', context)
 

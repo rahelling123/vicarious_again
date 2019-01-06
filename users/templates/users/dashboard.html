@@ -7,7 +7,12 @@
     <meta charset="UTF-8">
     <title>User Dashboard</title>
 </head>
-
+<p>Personal messages:</p>
+    {% for message in user_message %}
+        Message thread with user:{{ message.sender.username }}
+        <li><a href="{% url 'users:thread' message.pk %}">{{ message.blurb }}</a> </li><br>
+    {% endfor %}
+<hr>
 
 <body>
 These are all the comments you have made:

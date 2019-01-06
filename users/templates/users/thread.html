@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+</head>
+<body>
+<h1>Inbox</h1><br>
+{% for reply in thread_replies %}
+    <li>{{ reply.content }} @ {{ reply.sent_at }}</li><br>
+{% endfor %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Reply">
+</form>
+</body>
+</html>
